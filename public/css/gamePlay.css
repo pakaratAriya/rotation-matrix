@@ -13,12 +13,19 @@
     user-select: none;
 }
 
+#game_body{
+    top: -80px;
+    position: relative;
+}
+
 .tile:hover{
     background-color: #985321;
 }
 
 table{
     background-color: black;
+    border: 30px black solid;
+    border-radius: 10px;
 }
 
 td,tr{
@@ -69,14 +76,12 @@ td,tr{
 
 
 .correct_tile, .correct_tile:hover{
-    background-color: cyan;
+    background-color: #01FF00;
     transition: 0.6s;
     transform: rotateY(180deg);
     color: darkgreen;
     font-size: 2em;
-    text-align: center;
     line-height: 1.5em;
-    transition: 0.6s;
 }
 
 .wrong_tile, .wrong_tile:hover{
@@ -90,15 +95,22 @@ td,tr{
     font-family: 'Times New Roman', Times, serif
 }
 
-.rotate_tile1 span{
-    transform: rotate(0deg) rotateY(180deg);
+.rotate_tile1 p{
+    transform: rotate(90deg) rotateY(180deg);
+    text-align: center;
+    padding-left: 40px;
+    font-weight: 900;
 }
 
-.rotate_tile2 span{
-    transform: rotate(-180deg) rotateY(180deg);
+.rotate_tile2 p{
+    transform: rotate(180deg) rotateY(180deg);
+    text-align: center;
+    margin-left: 40px;
+    font-weight: 900;
+    width: 50px;
 }
 
-.rotate_tile3 span{
+.rotate_tile3 p{
     transform: rotate(-270deg) rotateY(-180deg);
 }
 
