@@ -2,4 +2,24 @@
     <p id="title">{{title}}</p>
     <p id="description">{{{description}}}</p>
     <a href="/gamePlay"><button>{{{play}}}</button></a>
+    <div id="leaderboard">
+        <table>
+            <tr>
+                <th>rank</th>
+                <th>name</th>
+                <th>score</th>
+                <th>level</th>
+            </tr>
+        {{#each players}}
+            <tr>
+                <td>{{inc @index}}</td>
+                <td id="username">{{username}}</span>
+                <td id="leaderboard-score">{{score}}</td>
+                <td id="leaderboard-level">{{level}}</span>
+            </tr>
+            
+        {{/each}}
+        </table>
+        
+    </div>
 </div>

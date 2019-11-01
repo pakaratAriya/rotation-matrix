@@ -6,13 +6,17 @@ const path = require('path')
 const mongo = require('mongodb').MongoClient
 const url = process.env.MONGODB_URL
 const expressHbs = require('express-handlebars')
-const global_string = require('./public/js/constant')
+
+const port = process.env.PORT || 3000
 app.engine(
     'hbs',
     expressHbs({
         layoutsDir: 'views/layouts/',
         defaultLayout: 'main-layout',
-        extname: 'hbs'
+        extname: 'hbs',
+        helpers: {
+            inc: i => (i+1)  
+        }
     })
 )
 app.set('view engine','hbs')
@@ -25,6 +29,6 @@ app.use(express.static(path.join(__dirname,'public')))
 
 app.use(rotationMatrixRoutes)
 
-app.listen(process.env.PORT,process.env.IP,()=>{
+app.listen(port,()=>{
     console.log("Server started")
 })

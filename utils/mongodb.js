@@ -1,7 +1,7 @@
-const mongo = require('mongodb').MongoClient
+const mongoClient = require('mongodb').MongoClient
 const url = process.env.MONGODB_URL
 let collections = {}
-mongo.connect(url, {
+mongoClient.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }, (err, client)=>{
