@@ -1,5 +1,5 @@
 const mongoClient = require('mongodb').MongoClient
-const url = process.env.MONGODB_URL
+const url = "mongodb+srv://game123:game123@matrixrotation-zovnx.azure.mongodb.net/test?retryWrites=true&w=majority"
 let collections = {}
 mongoClient.connect(url, {
     useNewUrlParser: true,

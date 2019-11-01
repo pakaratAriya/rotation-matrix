@@ -29,7 +29,7 @@ create_puzzle_game = (difficulty) =>{
     let puzzle = document.querySelector("#game_body").appendChild(create_puzzle_grid());
     puzzle.className = "puzzle"
     puzzle.addEventListener("click",()=>start_puzzle(puzzle))
-    document.querySelector("#levelTxt").innerHTML = "LEVEL " + gb.difficulty 
+    document.querySelector("#levelTxt").innerHTML = "LEVEL " + difficulty 
 }
 
 reset_puzzle = (difficulty)=>{
