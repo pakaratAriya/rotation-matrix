@@ -3,8 +3,6 @@ const app = express();
 const dotenv = require('dotenv')
 dotenv.config()
 const path = require('path')
-const mongo = require('mongodb').MongoClient
-const url = process.env.MONGODB_URL
 const expressHbs = require('express-handlebars')
 
 const port = process.env.PORT || 3000
@@ -22,11 +20,11 @@ app.engine(
 app.set('view engine','hbs')
 app.set('views','views')
 
-
+// load the router
 const rotationMatrixRoutes = require('./routes/manager')
-
+// set where to load the file info
 app.use(express.static(path.join(__dirname,'public')))
-
+// use the imported router
 app.use(rotationMatrixRoutes)
 
 app.listen(port,()=>{

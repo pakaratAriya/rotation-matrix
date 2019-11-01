@@ -1,3 +1,4 @@
+// ====================== function to terminate the game ===============
 let terminate_game = ()=>{
     fetch('/saveScore',{
         method:'POST',

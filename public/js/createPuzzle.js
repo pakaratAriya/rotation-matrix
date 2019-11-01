@@ -1,10 +1,13 @@
+// ===================== constant variables for the puzzle ============================
 const start_dimension= 5
 const original_tile_number=5
 const maxDimension = 8
 
+// ======================== global variable object ===================================
 let gb = {
     correct_sound:null,
     wrong_sound: null,
+    enterGame_sound: null,
     dimensionX:5,
     dimensionY:5,
     arr: new Array(5),
@@ -21,6 +24,7 @@ let gb = {
     score: 0
 }
 
+// ========================= the function to create a sound =======================
 function sound(src) {
     this.sound = document.createElement("audio");
     this.sound.src = src;
@@ -36,5 +40,6 @@ function sound(src) {
     }
   }
 
+  //=================== call the create puzzle from puzzleLogic.js ===============================
 create_puzzle_game(gb.level)
 

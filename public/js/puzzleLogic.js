@@ -1,9 +1,16 @@
+// ================ function to set the correct tiles =======================
+// parameters:
+//     difficulty: the difficulty of the current level
 create_puzzle_game = (difficulty) =>{
+    // initiate sounds for the game
     gb.correct_sound = new sound("../sfx/correct.mp3")
     gb.wrong_sound = new sound("../sfx/wrong.mp3")
+    gb.enterGame_sound = new sound("../sfx/enterGame.mp3")
+    // set the difficulty(level)
     if(difficulty < 1){
         difficulty = 1
     }
+    // record the best level the player can reach
     if(gb.best_level < difficulty){
         gb.best_level = difficulty
     }
@@ -11,6 +18,7 @@ create_puzzle_game = (difficulty) =>{
     gb.correct_tile_number = 0
     gb.current_tile_correct = 0
     gb.has_spinned = false;
+    // calculate the dimension and number of tiles of the puzzle 
     if(gb.dimensionX < maxDimension || gb.dimensionY < maxDimension){
         gb.dimensionX = start_dimension + Math.floor(difficulty / 2)
         gb.dimensionY = gb.dimensionX - (difficulty % 2 == 0 ? 1 : 0)
@@ -20,18 +28,25 @@ create_puzzle_game = (difficulty) =>{
     gb.click_count = gb.tile_number
     gb.arr = new Array(gb.dimensionX)
     gb.tile_arr = new Array(gb.dimensionX)
+    // create empty array to keep track of correct tiles
     for(let i = 0; i < gb.arr.length; i++){
         gb.arr[i] = new Array(gb.dimensionY)
         for(let j = 0; j < gb.arr[i].length; j++){
             gb.arr[i][j] = 0;
         }
     }
+    // append the puzzlee in the game_body(div)
     let puzzle = document.querySelector("#game_body").appendChild(create_puzzle_grid());
     puzzle.className = "puzzle"
+    // start the game when we press the tiles
     puzzle.addEventListener("click",()=>start_puzzle(puzzle))
+    // setting the text for the current level
     document.querySelector("#levelTxt").innerHTML = "LEVEL " + difficulty 
 }
 
+// ==================== function to reset the puzzle ================
+// parameters:
+//     difficulty: the current level
 reset_puzzle = (difficulty)=>{
     document.querySelector("#game_body").remove()
     let puzzle = document.createElement("div")
@@ -40,6 +55,9 @@ reset_puzzle = (difficulty)=>{
     create_puzzle_game(difficulty)
 }
 
+// ============== function to create one tile ================
+// output: 
+//     tile: the object of the created tile
 create_tile = (isCorrect)=>{
     let tile = document.createElement("div")
     tile.className="tile"
@@ -49,8 +67,12 @@ create_tile = (isCorrect)=>{
     return tile
 }
 
+// =============== function to create the whole puzzle =================
+// output:
+//     table: the whole puzzle that create by table
 create_puzzle_grid = ()=>{
     let ctCount = 0
+    // random correct tiles for the puzzle
     while(ctCount < gb.tile_number){
         let x = Math.floor(Math.random()*gb.dimensionX)
         let y = Math.floor(Math.random()*gb.dimensionY)
@@ -61,6 +83,7 @@ create_puzzle_grid = ()=>{
     }
     gb.correct_tile_number = ctCount
     let table = document.createElement("table")
+    // generate the tiles for the puzzle
     for(let i = 0; i<gb.dimensionX;i++){
         let tr = document.createElement("tr")
         gb.tile_arr[i] = []
@@ -76,10 +99,11 @@ create_puzzle_grid = ()=>{
     }
     return table;
 }
-
-on_click_tile = (tile,i,j)=>{
+// =============== the event function when we click the tile =============
+on_click_tile = (tile,i,j)=> {
     if(gb.game_start){
         if(gb.click_count > 0){
+            // add 1 score when click the right tile
             if(gb.arr[i][j] == 1 ){
                 gb.arr[i][j] = 2
                 tile.classList.add("correct_tile")
@@ -88,6 +112,7 @@ on_click_tile = (tile,i,j)=>{
                 gb.correct_sound.stop()
                 gb.correct_sound.play()
                 gb.click_count--;
+            // minus 1 score when click the wrong tile
             }else if(gb.arr[i][j]==0){
                 gb.arr[i][j] = 2
                 tile.classList.add("wrong_tile")
@@ -97,6 +122,7 @@ on_click_tile = (tile,i,j)=>{
                 gb.wrong_sound.stop()
                 gb.wrong_sound.play()
             }
+            // if score less than 0 terminate the game
             if(gb.score < 0){
                 show_result()
                 setTimeout(() => {
@@ -105,6 +131,7 @@ on_click_tile = (tile,i,j)=>{
                 
             }
         }
+        // check whether the player still can click
         if(gb.click_count==0)
         {
             show_result()
@@ -118,6 +145,7 @@ on_click_tile = (tile,i,j)=>{
     }
 }
 
+// ====================== function to show the correct tiles ==================
 show_result = () =>{
     for(let i = 0; i < gb.arr.length; i++){
         for(let j = 0; j < gb.arr[i].length; j++){
@@ -128,9 +156,11 @@ show_result = () =>{
     }
 }
 
+// =============== function to spin the puzzle =======================
 start_puzzle = (puzzle) => {
     if(!gb.game_start && !gb.has_spinned){
         gb.has_spinned = true;
+        gb.enterGame_sound.play()
         let spin_array = ["start_rotate1","start_rotate2","start_rotate3"]
         let rotate_array = ["rotate_tile1","rotate_tile2","rotate_tile3"]
         let i_rand = Math.floor(Math.random()*3)
